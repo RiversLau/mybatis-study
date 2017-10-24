@@ -15,7 +15,7 @@ public class SysRole {
 
     private Long id;
     private String roleName;
-    private Date createBy;
+    private Long createBy;
     private Date createTime;
     private Integer enabled;
 }
