@@ -35,6 +35,8 @@
             <version>1.7.12</version>
         </dependency>
 
+	<!-- 测试 -->
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
