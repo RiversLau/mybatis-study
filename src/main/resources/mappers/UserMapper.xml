@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yoxiang.mapper.UserMapper">
+
+    <resultMap id="userMap" type="com.yoxiang.model.SysUser">
+        <id property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPassword" column="user_password"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="userInfo" column="user_info"/>
+        <result property="headImg" column="head_img" jdbcType="BLOB"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="userMap">
+        select * from sys_user where id = #{id, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultType="com.yoxiang.model.SysUser">
+        select id,
+               user_name as userName,
+               user_password as userPassword,
+               user_email as userEmail,
+               user_info as userInfo,
+               head_img as headImg,
+               create_time as createTime
+        from sys_user
+    </select>
+</mapper>
