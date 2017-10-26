@@ -1,6 +1,9 @@
 package com.yoxiang.mapper;
 
-import com.yoxiang.model.*;
+import com.yoxiang.model.SysRole;
+import com.yoxiang.model.SysRoleExtend;
+import com.yoxiang.model.SysRoleExtend2;
+import com.yoxiang.model.SysUser;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;

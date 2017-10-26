@@ -1,7 +1,6 @@
 package com.yoxiang.mapper;
 
 import com.yoxiang.model.SysPrivilege;
-import com.yoxiang.model.SysRole;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;
