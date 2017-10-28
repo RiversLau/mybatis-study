@@ -74,8 +74,6 @@ public class RoleMapperTest extends BaseMapperTest {
             SysRole role = new SysRole();
             role.setRoleName("test");
             role.setEnabled(1);
-            role.setCreateBy(1l);
-            role.setCreateTime(new Date());
             int result = roleMapper.insert(role);
             Assert.assertEquals(1, result);
         } finally {
@@ -92,8 +90,6 @@ public class RoleMapperTest extends BaseMapperTest {
             SysRole role = new SysRole();
             role.setRoleName("test");
             role.setEnabled(1);
-            role.setCreateBy(1l);
-            role.setCreateTime(new Date());
             int result = roleMapper.insert2(role);
             Assert.assertEquals(1, result);
             System.out.println(role.getId());
@@ -111,8 +107,6 @@ public class RoleMapperTest extends BaseMapperTest {
             SysRole role = new SysRole();
             role.setRoleName("test");
             role.setEnabled(1);
-            role.setCreateBy(1l);
-            role.setCreateTime(new Date());
             int result = roleMapper.insert3(role);
             Assert.assertEquals(1, result);
             System.out.println(role.getId());
@@ -131,8 +125,6 @@ public class RoleMapperTest extends BaseMapperTest {
             role.setId(1l);
             role.setRoleName("test");
             role.setEnabled(1);
-            role.setCreateBy(1l);
-            role.setCreateTime(new Date());
             int result = roleMapper.updateById(role);
             Assert.assertEquals(1, result);
 

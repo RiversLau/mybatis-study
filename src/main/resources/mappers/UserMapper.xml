@@ -14,6 +14,11 @@
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <resultMap id="userRoleMap" extends="userMap" type="com.yoxiang.model.SysUser">
+        <association property="role" columnPrefix="role_" resultMap="com.yoxiang.mapper.RoleMapper.roleMap">
+        </association>
+    </resultMap>
+
     <select id="selectById" resultMap="userMap">
         select * from sys_user where id = #{id, jdbcType=INTEGER}
     </select>
@@ -254,4 +259,94 @@
         delete from sys_user
         where id = #{id}
     </delete>
+
+    <select id="selectUserAndRoleById" resultType="com.yoxiang.model.SysUser">
+        SELECT
+          u.id,
+          u.user_name as userName,
+          u.user_password as userPassword,
+          u.user_email as userEmail,
+          u.user_info as userInfo,
+          u.head_img as headImg,
+          u.create_time as createTime,
+          r.id as "role.id",
+          r.role_name as "role.roleName",
+          r.enabled as "role.enabled",
+          r.create_by as "role.createBy",
+          r.create_time as "role.createTime"
+        FROM sys_user u
+        INNER JOIN sys_user_role ur on u.id = ur.user_id
+        INNER JOIN sys_role r on ur.role_id = r.id
+        WHERE u.id = #{id}
+    </select>
+
+    <select id="selectUserAndRoleById2" resultMap="userRoleMap">
+        SELECT
+          u.id,
+          u.user_name,
+          u.user_password,
+          u.user_email,
+          u.user_info,
+          u.head_img,
+          u.create_time,
+          r.id as role_id,
+          r.role_name as role_role_name,
+          r.enabled as role_enabled,
+          r.create_by as role_create_by,
+          r.create_time as role_create_time
+        FROM sys_user u
+        INNER JOIN sys_user_role ur on u.id = ur.user_id
+        INNER JOIN sys_role r on ur.role_id = r.id
+        WHERE u.id = #{id}
+    </select>
+
+    <resultMap id="userRoleMapSelect" extends="userMap" type="com.yoxiang.model.SysUser">
+        <association property="role" fetchType="lazy" column="{id=role_id}"
+                     select="com.yoxiang.mapper.RoleMapper.selectRoleById"/>
+    </resultMap>
+
+    <select id="selectUserAndRoleByIdSelect" resultMap="userRoleMapSelect">
+        SELECT
+          u.id,
+          u.user_name,
+          u.user_password,
+          u.user_email,
+          u.user_info,
+          u.head_img,
+          u.create_time,
+          ur.role_id
+        FROM sys_user u
+        INNER JOIN sys_user_role ur on u.id = ur.user_id
+        WHERE u.id = #{id}
+    </select>
+
+    <resultMap id="userRoleListMap" extends="userMap" type="com.yoxiang.model.SysUser">
+        <collection property="roleList" columnPrefix="role_"
+                    resultMap="com.yoxiang.mapper.RoleMapper.selectAllRoleAndPrivileges">
+        </collection>
+    </resultMap>
+
+    <select id="selectAllUserAndRoles" resultMap="userRoleListMap">
+        SELECT
+          u.id,
+          u.user_name,
+          u.user_password,
+          u.user_email,
+          u.user_info,
+          u.head_img,
+          u.create_time,
+          r.id as role_id,
+          r.role_name as role_role_name,
+          r.enabled as role_enabled,
+          r.create_by as role_create_by,
+          r.create_time as role_create_time,
+          p.id as role_privilege_id,
+          p.privilege_name as role_privilege_privilege_name,
+          p.privilege_url as role_privilege_privilege_url
+        FROM sys_user u
+        INNER JOIN sys_user_role ur on u.id = ur.user_id
+        INNER JOIN sys_role r on r.id = ur.role_id
+        INNER JOIN sys_role_privilege rp on r.id = rp.role_id
+        INNER JOIN sys_privilege p on p.id = rp.privilege_id
+    </select>
 </mapper>

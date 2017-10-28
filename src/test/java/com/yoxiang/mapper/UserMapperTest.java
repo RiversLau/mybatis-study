@@ -1,9 +1,6 @@
 package com.yoxiang.mapper;
 
-import com.yoxiang.model.SysRole;
-import com.yoxiang.model.SysRoleExtend;
-import com.yoxiang.model.SysRoleExtend2;
-import com.yoxiang.model.SysUser;
+import com.yoxiang.model.*;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;
@@ -371,6 +368,78 @@ public class UserMapperTest extends BaseMapperTest {
             List<SysRole> roleList = userMapper.selectRolesByUserIdAndRoleEnabled2(user, role);
             Assert.assertNotNull(roleList);
             Assert.assertTrue(roleList.size() > 0);
+        } finally {
+            session.rollback();
+            session.close();
+        }
+    }
+
+    @Test
+    public void testSelectUserAndRoleById() {
+        SqlSession session = getSession();
+        try {
+            UserMapper userMapper = session.getMapper(UserMapper.class);
+            SysUser user = userMapper.selectUserAndRoleById(1001l);
+            Assert.assertNotNull(user);
+            Assert.assertNotNull(user.getRoleList());
+            Assert.assertEquals("普通用户", user.getRoleList().get(0).getRoleName());
+        } finally {
+            session.rollback();
+            session.close();
+        }
+    }
+
+    @Test
+    public void testSelectUserAndRoleById2() {
+        SqlSession session = getSession();
+        try {
+            UserMapper userMapper = session.getMapper(UserMapper.class);
+            SysUser user = userMapper.selectUserAndRoleById2(1001l);
+            Assert.assertNotNull(user);
+            Assert.assertNotNull(user.getRoleList());
+            Assert.assertEquals("普通用户", user.getRoleList().get(0).getRoleName());
+        } finally {
+            session.rollback();
+            session.close();
+        }
+    }
+
+    @Test
+    public void testSelectUserAndRoleByIdSelect() {
+        SqlSession session = getSession();
+        try {
+            UserMapper userMapper = session.getMapper(UserMapper.class);
+            SysUser user = userMapper.selectUserAndRoleByIdSelect(1001l);
+            System.out.println("调用user.equals(null)");
+            user.equals(null);
+            System.out.println("调用user.getRole()");
+            Assert.assertNotNull(user.getRoleList());
+            Assert.assertEquals("普通用户", user.getRoleList().get(0).getRoleName());
+        } finally {
+            session.rollback();
+            session.close();
+        }
+    }
+
+    @Test
+    public void testSelectAllUserAndRoles() {
+        SqlSession session = getSession();
+        try {
+            UserMapper userMapper = session.getMapper(UserMapper.class);
+            List<SysUser> userList = userMapper.selectAllUserAndRoles();
+            Assert.assertNotNull(userList);
+            for (SysUser user : userList) {
+                List<SysRole> roleList = user.getRoleList();
+                Assert.assertNotNull(roleList);
+                for (SysRole role : roleList) {
+                    System.out.println(user.getUserName() + " has role : " + role.getRoleName());
+                    List<SysPrivilege> privilegeList = role.getPrivilegeList();
+                    Assert.assertNotNull(privilegeList);
+                    for (SysPrivilege privilege : privilegeList) {
+                        System.out.println(role.getRoleName() + " createed by" + role.getCreateInfo().getCreateBy() + " has privilege : " + privilege.getPrivilegeName());
+                    }
+                }
+            }
         } finally {
             session.rollback();
             session.close();

@@ -50,4 +50,12 @@ public interface UserMapper {
     int updateByMap(Map<String, Object> map);
 
     int deleteById(Long id);
+
+    SysUser selectUserAndRoleById(Long id);
+
+    SysUser selectUserAndRoleById2(Long id);
+
+    SysUser selectUserAndRoleByIdSelect(Long id);
+
+    List<SysUser> selectAllUserAndRoles();
 }

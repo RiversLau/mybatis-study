@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Author: Rivers
@@ -20,4 +21,6 @@ public class SysUser {
     private String userInfo;
     private byte[] headImg;
     private Date createTime;
+
+    private List<SysRole> roleList;
 }
