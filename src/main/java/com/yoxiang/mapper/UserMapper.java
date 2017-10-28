@@ -7,6 +7,7 @@ import com.yoxiang.model.SysUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: Rivers
@@ -15,6 +16,12 @@ import java.util.List;
 public interface UserMapper {
 
     SysUser selectById(Long id);
+
+    List<SysUser> selectByIdList(@Param("idList") List<Long> idList);
+
+    SysUser selectByIdOrUserName(SysUser sysUser);
+
+    List<SysUser> selectByUser(SysUser user);
 
     List<SysUser> selectAll();
 
@@ -34,7 +41,13 @@ public interface UserMapper {
 
     int insertUser3(SysUser user);
 
+    int insertList(@Param("userList") List<SysUser> userList);
+
     int updateById(SysUser sysUser);
+
+    int updateByIdSelective(SysUser sysUser);
+
+    int updateByMap(Map<String, Object> map);
 
     int deleteById(Long id);
 }
